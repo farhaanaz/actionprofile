@@ -1,4 +1,4 @@
-main: build WF
+name: build WF
 on:
   push:
     branches:
