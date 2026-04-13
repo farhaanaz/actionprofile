@@ -3,13 +3,19 @@ on:
   push:
     branches:
       - main
+  
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - name: Code checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - name: Maven build
         run: mvn install
@@ -18,7 +24,9 @@ jobs:
     needs: build
     steps:
       - name: Code checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
 
       - name: Run test on main branch
         run: mvn test
