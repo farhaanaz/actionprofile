@@ -8,6 +8,11 @@ on:
     branches:
       - main
 
+  workflow_dispatch:
+
+  schedule:
+    - cron: "10 14 * * 1_5" # after 14:10 every weekday
+
 jobs:
   build:
     runs-on: ubuntu-latest
