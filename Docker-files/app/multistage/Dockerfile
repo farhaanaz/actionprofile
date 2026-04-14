@@ -1,13 +1,14 @@
-FROM maven:3.9.9-eclipse-temurin-21-jammy AS BUILD_IMAGE
-COPY . /app
+FROM maven:3.9.9-eclipse-temurin-21-jammy AS build_image
+
 WORKDIR /app
-RUN mvn install
+COPY . .
+RUN mvn clean package
 
 FROM tomcat:10-jdk21
 
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-COPY --from=BUILD_IMAGE /app/vprofile-project/target/vprofile-v2.war /usr/local/tomcat/webapps/ROOT.war
+COPY --from=build_image /app/target/*.war /usr/local/tomcat/webapps/ROOT.war
 
 EXPOSE 8080
 CMD ["catalina.sh", "run"]
